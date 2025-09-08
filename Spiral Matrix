@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void imprimirEspiral(int matriz[][100], int filas, int columnas) {
+    int inicioFila = 0, finFila = filas - 1;
+    int inicioCol = 0, finCol = columnas - 1;
+
+    while (inicioFila <= finFila && inicioCol <= finCol) {
+        for (int i = inicioCol; i <= finCol; i++)
+            printf("%d ", matriz[inicioFila][i]);
+        inicioFila++;
+
+        for (int i = inicioFila; i <= finFila; i++)
+            printf("%d ", matriz[i][finCol]);
+        finCol--;
+
+        if (inicioFila <= finFila) {
+            for (int i = finCol; i >= inicioCol; i--)
+                printf("%d ", matriz[finFila][i]);
+            finFila--;
+        }
+
+        if (inicioCol <= finCol) {
+            for (int i = finFila; i >= inicioFila; i--)
+                printf("%d ", matriz[i][inicioCol]);
+            inicioCol++;
+        }
+    }
+}
+
+int main() {
+    FILE *archivo;
+    int matriz[100][100];
+    int filas, columnas;
+
+    archivo = fopen("matriz.txt", "r");
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return 1;
+    }
+
+    fscanf(archivo, "%d %d", &filas, &columnas);
+
+    for (int i = 0; i < filas; i++)
+        for (int j = 0; j < columnas; j++)
+            fscanf(archivo, "%d", &matriz[i][j]);
+
+    fclose(archivo);
+
+    printf("Elementos en forma espiral:\n");
+    imprimirEspiral(matriz, filas, columnas);
+
+    return 0;
+}
