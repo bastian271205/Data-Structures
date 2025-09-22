@@ -1,0 +1,75 @@
+#include <stdio.h>
+#define SIZE 10 // Puede editar el espacio de memoria de cuantos datos puede almacenar
+
+int queue[SIZE];
+int front = 0, rear = -1;
+
+int isFull() {
+    return rear == SIZE - 1;
+}
+
+int isEmpty() {
+    return front > rear;
+}
+
+void enqueue(int value) {
+    if (isFull()) {
+        printf("La cola está llena. No se puede encolar.\n");
+    } else {
+        rear++;
+        queue[rear] = value;
+        printf("Elemento %d encolado.\n", value);
+    }
+}
+
+void dequeue() {
+    if (isEmpty()) {
+        printf("la cola está vacía. No se puede desencolar.\n");
+    } else {
+        printf("Elemento %d desencolado.\n", queue[front]);
+        front++;
+    }
+}
+
+void displayQueue() {
+    if (isEmpty()) {
+        printf(" La cola está vacía.\n");
+    } else {
+        printf(" Contenido actual de la cola: ");
+        for (int i = front; i <= rear; i++) {
+            printf("%d ", queue[i]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, value;
+
+    while (1) {
+        printf("\n ¿Qué deseas hacer?\n");
+        printf("1. Encolar\n");
+        printf("2. Desencolar\n");
+        printf("0. Salir\n");
+        printf(" Opción: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf(" Ingresa el número a encolar: ");
+                scanf("%d", &value);
+                enqueue(value);
+                displayQueue();
+                break;
+            case 2:
+                dequeue();
+                displayQueue();
+                break;
+            case 0:
+                printf(" Programa finalizado.\n");
+                return 0;
+            default:
+                printf(" Opción inválida. Intenta de nuevo.\n");
+        }
+    }
+}
